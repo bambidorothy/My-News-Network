@@ -6,11 +6,45 @@
  * Copyright 2013-2020 Start Bootstrap
  * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-simple-sidebar/blob/master/LICENSE)
  */
-
+ #logo { /*places logo image in the center of the page*/
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+ }
+label {
+  color: white;
+}
+#mainH1 {
+  color: white;
+}
+.form-group {
+  padding-bottom: 1em;
+}
+#loginInput {
+  border-radius: 1em;
+}
  #wrapper {
     overflow-x: hidden;
  }
 
+ #loginPage {
+   background-color: rgb(25, 32, 96);
+ }
+ .helpText {
+   color: white;
+   text-align: center;
+ }
+.helpLink:hover {
+   background-color: white;
+   transition: 1s;
+   border-radius: 1em ;
+   padding: 0.2em;
+ }
+button {
+  border-radius: 1em; 
+  width: 100%;
+}
 #sidebar-wrapper {
   min-height: 100vh;
   margin-left: -15rem;
