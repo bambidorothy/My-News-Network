@@ -11,7 +11,6 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-
 $(document).ready(async function () {
 	var trigger = $('.hamburger'),
 		overlay = $('.overlay'),

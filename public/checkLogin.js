@@ -1,5 +1,6 @@
 var db = firebase.firestore();
 
+
 function handleSignIn() {
   if (firebase.auth().currentUser) { //if a user is currently logged in
     firebase.auth().signOut();
@@ -55,6 +56,7 @@ function handleSignOut() {
 function handleSignUp() {
   var email = document.getElementById('signUpEmail').value;
   var password = document.getElementById('signUpPwd').value;
+  var uname = document.getElementById("signUpName").value;
   if (email.length < 4) {
     alert('Please enter a valid email address.');
     return;
@@ -69,34 +71,46 @@ function handleSignUp() {
   }
   // Create user with email and pass.
   // [START createwithemail]
-  firebase.auth().createUserWithEmailAndPassword(email, password).then(cred => {
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then(function (data) {
+      // get user data from the auth trigger
+      const userUid = data.user.uid; // The UID of the user.
+      const email = data.user.email; // The email of the user.
+      const displayName = uname; // The display name of the user.
 
-    return db.collection('users').doc(cred.user.uid).set({
-      name: document.getElementById('signUpName').value
+      // console.log("User details: " + data.user);
+      // console.log("UserID: " + data.user.uid);
+      // set account  doc  
+      const account = {
+        useruid: userUid,
+        useremail: email,
+        name: displayName
+      }
+      // firebase.firestore().collection('users').doc(email).set(account);
+      // alert("Your account has been created successfully with user email: " + email);
+      // // window.open('index.html', '_self');
+
+      firebase.firestore().collection('users').doc(email).set(account).then(function () {
+        alert("Document successfully written!  Your account has been created successfully with user email: " + email);
+        window.open('index.html', '_self');
+      }).catch(function () {
+        alert("Document on write failed!");
+      });
+
+    })
+    .catch(function (error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // [START_EXCLUDE]
+      if (errorCode == 'auth/weak-password') {
+        alert('The password is too weak.');
+      } else {
+        alert(errorMessage);
+      }
+      console.log(error);
+      // [END_EXCLUDE]
     });
-
-  }).catch(function (error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // [START_EXCLUDE]
-    if (errorCode == 'auth/weak-password') {
-      alert('The password is too weak.');
-    } else {
-      alert(errorMessage);
-    }
-    console.log(error);
-    // [END_EXCLUDE]
-  });
-
-  // firebase.auth().createUserWithEmailAndPassword(email, password).then(cred => {
-  //   return firebase.firestore.collection('users').doc(cred.user.uid).set({
-  //     interests: {}
-  //   })
-  // })
-  alert('Your account has been successfully created!'); //alert user with successful account creation
-  window.location = 'index.html'; //redirect user to login page after creating account to sign in.
-  // [END createwithemail]
 }
 
 /**
