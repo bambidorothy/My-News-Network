@@ -170,6 +170,10 @@ function updateProfile(e) {
   // });
 }
 
+function updatePassword() {
+
+}
+
 /**
  * initApp handles setting up UI event listeners and registering Firebase auth listeners:
  *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or

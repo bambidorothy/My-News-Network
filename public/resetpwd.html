@@ -52,7 +52,7 @@
                         <input type="email" id="resetPwdEmail" style="border-radius: 1em;" class="form-control"
                             id="loginEmail" placeholder="Email">
                     </div>
-                    <button type="button" id="resetBtn" style="border-radius: 1em;"
+                    <button type="button" onclick="sendPasswordReset()" id="resetBtn" style="border-radius: 1em;"
                         class="btn btn-outline-success">Reset
                         Password</button>
                     <p class="helpText"> <a class="helpLink" href="index.html">Have an account?</a> <a class="helpLink"
@@ -65,7 +65,7 @@
     <!-- include checkLogin JavaScript -->
     <script src="checkLogin.js"></script>
     <script>
-        document.getElementById('resetBtn').addEventListener('click', sendPasswordReset); //add event listener
+        // document.getElementById('resetBtn').addEventListener('click', sendPasswordReset); //add event listener
     </script>
 </body>
 <script>
