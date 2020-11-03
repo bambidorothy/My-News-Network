@@ -58,8 +58,11 @@ $(document).ready(async function () {
 			+ '<h5 class="card-title">' + value.source + '</h5>'
 			+ '<h6 class="card-subtitle mb-2 text-muted">' + value.publishedDate + '</h6>'
 			+ '<p class="card-text" id="news1">' + value.title + '</p>'
-			+ '<a href="' + value.link + '" class="card-link">Card link</a>'
-			+ '<a href="#" class="card-link">Another link</a>'
+			+ '<a href="' + value.link + '" class="card-link">Open News</a>'
+			+ '<a href="#" class="card-link">Save News</a>'
+			+ '<a href="#" class="card-link"><img src="/bootstrap-icons/hand-thumbs-up.svg" alt="" width="20" height="20" title="Like">10</a>'
+			+ '<a href="#" class="card-link"><img src="/bootstrap-icons/hand-thumbs-down.svg" alt="" width="20" height="20" title="Dislike">2</a>'
+			+ '<a href="#" class="card-link"><img src="/bootstrap-icons/eye.svg" alt="" width="20" height="20" title="Views">50</a>'
 			+ '</div>'
 			+ '</div>'
 		);
