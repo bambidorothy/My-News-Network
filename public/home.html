@@ -70,6 +70,13 @@
                 </li>
 
             </div>
+            <div class="sidebar-heading">User Settings</div>
+            <div class="list-group list-group-flush" aria-labelledby="navbarDropdown">
+                <a class="list-group-item list-group-item-action bg-light" href="profile.html">My Profile</a>
+                <a class="list-group-item list-group-item-action bg-light" href="history.html">Manage History</a>
+                <a class="list-group-item list-group-item-action bg-light" id="logoutBtn">Log Out</a>
+            </div>
+            </li>
         </div>
         <!-- /#sidebar-wrapper -->
 
@@ -79,13 +86,13 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
                 <button class="btn btn-primary" type="button" id="menu-toggle">News</button>
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                <!-- <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-                </button>
+                </button> -->
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <form class="form-inline">
                         <input class="form-control" type="search" placeholder="Search for a category or news source..."
                             aria-label="Search">
@@ -107,7 +114,12 @@
                             </div>
                         </li>
                     </ul>
-                </div>
+                </div> -->
+                <form class="form form-inline">
+                    <input class="form-control" type="search" placeholder="Search for a category or news source..."
+                        aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
             </nav>
 
             <div class="container-fluid" id="timeline">

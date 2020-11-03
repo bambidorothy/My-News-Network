@@ -47,23 +47,23 @@
                 <form style="padding-top: auto;" id="signupForm">
                     <h1 id="mainH1" style="text-align: center;">Register for an account</h1>
                     <div class="form-group">
-                        <label for="Name">Name</label>
+                        <label id="homeLabel" for="Name">Name</label>
                         <input type="text" style="border-radius: 1em;" required class="form-control" id="signUpName"
                             placeholder="Name">
                     </div>
                     <div class="form-group">
-                        <label for="email">Email address</label>
+                        <label id="homeLabel" for="email">Email address</label>
                         <input type="email" style="border-radius: 1em;" required class="form-control" id="signUpEmail"
                             placeholder="Email">
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
+                        <label id="homeLabel" for="password">Password</label>
                         <input type="password" style="border-radius: 1em;" required class="form-control" id="signUpPwd"
                             placeholder="Password">
                     </div>
                     <div class="checkbox">
                         <input type="checkbox" onclick="togglePwdVisibility()">
-                        <label>Show Password</label>
+                        <label id="homeLabel">Show Password</label>
                     </div>
                     <button type="button" id="signupBtn" style="border-radius: 1em;"
                         class="btn btn-outline-success">Create

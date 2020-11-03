@@ -1,5 +1,5 @@
-var db = firebase.firestore();
-
+var db = firebase.firestore(); //for firestore
+// var storage = firebase.storage(); //for storage
 
 function handleSignIn() {
   if (firebase.auth().currentUser) { //if a user is currently logged in
@@ -23,6 +23,7 @@ function handleSignIn() {
 
         //Succesful, do whatever you want in your page
         window.location.href = "home.html";
+        var user = firebase.auth().currentUser;
 
       })
       .catch(function (error) {
@@ -127,29 +128,47 @@ function handleSignUp() {
 //   // [END sendemailverification]
 // }
 
-// function sendPasswordReset() {
-//   var email = document.getElementById('email').value;
-//   // [START sendpasswordemail]
-//   firebase.auth().sendPasswordResetEmail(email).then(function () {
-//     // Password Reset Email Sent!
-//     // [START_EXCLUDE]
-//     alert('Password Reset Email Sent!');
-//     // [END_EXCLUDE]
-//   }).catch(function (error) {
-//     // Handle Errors here.
-//     var errorCode = error.code;
-//     var errorMessage = error.message;
-//     // [START_EXCLUDE]
-//     if (errorCode == 'auth/invalid-email') {
-//       alert(errorMessage);
-//     } else if (errorCode == 'auth/user-not-found') {
-//       alert(errorMessage);
-//     }
-//     console.log(error);
-//     // [END_EXCLUDE]
-//   });
-//   // [END sendpasswordemail];
-// }
+function sendPasswordReset() {
+  var email = document.getElementById('resetPwdEmail').value;
+  // [START sendpasswordemail]
+  firebase.auth().sendPasswordResetEmail(email).then(function () {
+    // Password Reset Email Sent!
+    // [START_EXCLUDE]
+    alert('Password Reset Email Sent!');
+    // [END_EXCLUDE]
+  }).catch(function (error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // [START_EXCLUDE]
+    if (errorCode == 'auth/invalid-email') {
+      alert(errorMessage);
+    } else if (errorCode == 'auth/user-not-found') {
+      alert(errorMessage);
+    }
+    console.log(error);
+    // [END_EXCLUDE]
+  });
+  // [END sendpasswordemail];
+}
+
+function updateProfile(e) {
+  e.preventDefault();
+  var newname = document.getElementById("updateNameField").value;
+  var newemail = document.getElementById("updateEmailField").value;
+
+  console.log(newname);
+  console.log(newemail);
+
+  // db.collection("users").doc(email).update({
+  //   "name": newname,
+  //   "useremail": newemail
+  // }).then(function () {
+  //   console.log("Document successfully updated!");
+  // }).catch(function () {
+  //   alert("Document on write failed!");
+  // });
+}
 
 /**
  * initApp handles setting up UI event listeners and registering Firebase auth listeners:
@@ -166,14 +185,88 @@ function initApp() {
 
     } else {
       // User is signed in.
-      // var displayName = user.displayName;
-      // var email = user.email;
+      var email = user.email;
+      var uid = user.uid;
+      // var displayName = firebase.firestore().collection('users').doc(email).get("name");
+
+      function renderProfile(doc) {
+
+        //for disabled name field dyanamically created
+        var node = document.createElement("INPUT"); //create input element
+        node.setAttribute("type", "text"); //set input type attribute
+        node.setAttribute("data-id", doc.id); //set data-id to user id
+        node.setAttribute("disabled", "true");
+        node.setAttribute("class", "form-control") //set class
+        node.setAttribute("placeholder", doc.data().name); //set input value
+        document.getElementById("profileFormDiv").appendChild(node);
+
+        //for disabled email field dyanamically created
+        var node = document.createElement("INPUT");
+        node.setAttribute("type", "email");
+        node.setAttribute("data-id", doc.id);
+        node.setAttribute("disabled", "true");
+        node.setAttribute("class", "form-control")
+        node.setAttribute("placeholder", doc.data().useremail);
+        document.getElementById("profileFormDiv").appendChild(node);
+
+
+        //FOR ACTUAL FORM INPUT
+
+        var node = document.createElement("INPUT"); //insert new name
+        node.setAttribute("type", "text"); //set input type attribute
+        node.setAttribute("data-id", doc.id); //set data-id to user id
+        node.setAttribute("id", "updateNameField");
+        node.setAttribute("class", "form-control mt-5") //set class
+        node.setAttribute("placeholder", "Enter name here");
+        document.getElementById("profileFormDiv").appendChild(node);
+
+        var node = document.createElement("INPUT"); //insert new email
+        node.setAttribute("type", "email");
+        node.setAttribute("data-id", doc.id);
+        node.setAttribute("id", "updateEmailField");
+        node.setAttribute("class", "form-control")
+        node.setAttribute("placeholder", "Enter email here");
+        document.getElementById("profileFormDiv").appendChild(node);
+
+        var node = document.createElement("INPUT"); //insert profile image
+        node.setAttribute("type", "file");
+        node.className = "upload";
+        document.getElementById("profileFormDiv").appendChild(node);
+
+
+        //for submit button dyanamically created
+        var node = document.createElement("BUTTON");
+        node.setAttribute("type", "submit");
+        node.setAttribute("class", "btn btn-primary");
+        node.setAttribute("onsubmit", "updateProfile()"); //attach onsubmit event on submit to update profile
+        node.innerHTML = "Submit";
+        document.getElementById("profileForm").appendChild(node);
+
+        document.getElementById('profileForm').addEventListener('submit', updateProfile());
+
+      }
+
+      db.collection("users").where("useremail", "==", email)
+        .get()
+        .then(function (querySnapshot) {
+          querySnapshot.forEach(function (doc) {
+            // doc.data() is never undefined for query doc snapshots
+            var data = doc.data();
+            // console.log(data);
+            renderProfile(doc);
+          });
+        })
+        .catch(function (error) {
+          console.log("Error getting document: ", error);
+        });
       // var emailVerified = user.emailVerified;
       // var photoURL = user.photoURL;
       // var isAnonymous = user.isAnonymous;
       // var uid = user.uid;
       // var providerData = user.providerData;
-      // // [START_EXCLUDE]
+      // console.log(displayName);
+
+      // [START_EXCLUDE]
       // document.getElementById('loginBtn-status').textContent = 'Signed in';
       // document.getElementById('loginBtn').textContent = 'Sign out';
       // document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
@@ -184,14 +277,8 @@ function initApp() {
     }
   });
   // [END authstatelistener]
-
-  // document.getElementById('loginBtn').addEventListener('click', handleSignIn, false);
-  // document.getElementById('logoutBtn').addEventListener('click', handleSignOut, false);
-  // document.getElementById('signupBtn').addEventListener('click', handleSignUp, false);
-  // document.getElementById('quickstart-verify-email').addEventListener('click', sendEmailVerification, false);
-  // document.getElementById('quickstart-password-reset').addEventListener('click', sendPasswordReset, false);
 }
 
-// window.onload = function () {
-//   initApp();
-// };
+window.onload = function () {
+  initApp();
+};

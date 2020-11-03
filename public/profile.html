@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html>
+
 <head>
     <!-- included meta tags -->
     <meta charset="utf-8">
@@ -5,8 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- Optional JavaScript -->
-    <script src="script.js"></script>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -19,6 +21,20 @@
         crossorigin="anonymous"></script>
     <!---link styles.css-->
     <link rel="stylesheet" href="styles.css">
+    <link href="/open-iconic/font/css/open-iconic-bootstrap.css" rel="stylesheet">
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+    		 https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-firestore.js"></script>
+
+    <!-- Scrolling JS -->
+    <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
+    <!-- JavaScript -->
+    <script src="script.js"></script>
     <title>Profile Page</title>
 </head>
 
@@ -75,15 +91,19 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="profile.html">My Profile</a>
-                                <a class="dropdown-item" href="logout.html">Log Out</a>
+                                <a class="dropdown-item" href="index.html">Log Out</a>
                             </div>
                         </li>
                     </ul>
                 </div>
             </nav>
 
-            <div class="container-fluid">
-                <input type="text" placeholder="Name">
+            <div class="container-fluid w-50 mr-auto ">
+                <form id="profileForm" class="form pt-5">
+                    <legend>Update User</legend>
+                    <div class="form group" id="profileFormDiv">
+                    </div>
+                </form>
             </div>
         </div>
         <!-- /#page-content-wrapper -->
@@ -102,4 +122,7 @@
             $("#wrapper").toggleClass("toggled");
         });
     </script>
+    <script src="checkLogin.js"></script>
 </body>
+
+</html>

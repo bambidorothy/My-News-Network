@@ -49,12 +49,13 @@
                     <h1 id="mainH1" style="text-align: center;">Reset Password Page</h1>
                     <div class="form-group">
                         <label for="email">Email address</label>
-                        <input type="email" style="border-radius: 1em;" class="form-control" id="loginEmail"
-                            placeholder="Email">
+                        <input type="email" id="resetPwdEmail" style="border-radius: 1em;" class="form-control"
+                            id="loginEmail" placeholder="Email">
                     </div>
-                    <button type="button" style="border-radius: 1em;" class="btn btn-outline-success">Reset
+                    <button type="button" id="resetBtn" style="border-radius: 1em;"
+                        class="btn btn-outline-success">Reset
                         Password</button>
-                    <p class="helpText"> <a class="helpLink" href="login.html">Have an account?</a> <a class="helpLink"
+                    <p class="helpText"> <a class="helpLink" href="index.html">Have an account?</a> <a class="helpLink"
                             href="signup.html">Sign up here!</a></p>
                 </form>
             </div>
@@ -63,6 +64,9 @@
     </div>
     <!-- include checkLogin JavaScript -->
     <script src="checkLogin.js"></script>
+    <script>
+        document.getElementById('resetBtn').addEventListener('click', sendPasswordReset); //add event listener
+    </script>
 </body>
 <script>
     /*Some JS script*/
