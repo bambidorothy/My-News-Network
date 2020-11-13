@@ -34,7 +34,8 @@
     <!-- Scrolling JS -->
     <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
     <!-- JavaScript -->
-    <script src="script.js"></script>
+    <script src="bookmarkScript.js"></script>
+    <script src="checkLogin.js"></script>
     <title>Your News</title>
 </head>
 
@@ -48,7 +49,6 @@
             <div class="list-group list-group-flush">
                 <a href="home.html" class="list-group-item list-group-item-action bg-light">Top Stories</a>
                 <a href="your-news.html" class="list-group-item list-group-item-action bg-light">Your News</a>
-                <a href="subscribe.html" class="list-group-item list-group-item-action bg-light">Subscribe</a>
                 <a href="bookmarks.html" class="list-group-item list-group-item-action bg-light">Bookmarks</a>
                 <a href="local.html" class="list-group-item list-group-item-action bg-light">Local</a>
                 <a href="international.html" class="list-group-item list-group-item-action bg-light">International</a>
@@ -95,7 +95,7 @@
                         id="menu-toggle">News</button>
                 </form>
 
-                &nbsp;&nbsp;&nbsp;&nbsp;
+
 
 
 
@@ -111,7 +111,7 @@
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                 style="color:whitesmoke;">
                                 Me
@@ -146,7 +146,7 @@
             $("#wrapper").toggleClass("toggled");
         });
     </script>
-
+    <script src="script.js"></script>
 </body>
 
 </html>

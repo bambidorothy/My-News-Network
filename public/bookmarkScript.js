@@ -1,4 +1,5 @@
 
+
 $(document).ready(async function () {
 	var trigger = $('.hamburger'),
 		overlay = $('.overlay'),
@@ -22,49 +23,68 @@ $(document).ready(async function () {
 			isClosed = true;
 		}
 	}
-
+	
 	var news = [];
-	//var userHis = [];
 	var newsID = [];
 	var newspost = [];
 	var loadCount = 0;
 	posted = true;
 	
-	console.log(userID);
+	var hisRec = [];
+	
 	//var userRef = firebase.firestore()
 	//.collection("users").doc(userID);
 	
 	//var userData = await userDB.get();
-	//var userHis = userData.History;
+	//var userBook = userData.Bookmarks;
 	
 	
-	var query = docRef.limit(10);
-	var snapshot = await query.get();
-	snapshot.forEach(doc => {
-		news.push(doc.data());
-		newsID.push(doc.id);
-		printNews(doc.data(), doc.id);
+	setTimeout(loadHistory, 1000)
+	
+	//var snapshot = await query.get();
+	//snapshot.forEach(doc => {
+	//	news.push(doc.data());
+	//	newsID.push(doc.id);
+	//	printNews(doc.data(), doc.id);
 		//console.log(doc.data());
 		//console.log(doc.id);
+	//});
+	function loadHistory(){
+		console.log(userBook);
+		var bookRec = userBook;
+		bookRec.forEach(rec => {
+		firebase.firestore()
+		.collection("NewsArticleData").doc(rec).get().then(function(doc) {
+		if (doc.exists) {
+			printNews(doc.data(), rec);
+		} else {
+			// doc.data() will be undefined in this case
+			console.log("No such document!");
+		}
+		}).catch(function(error) {
+			console.log("Error getting document:", error);
+		});
 	});
-	
+	}
 	function printNews(value, ID) {
 		$("#timeline").append(
-			'<div class="card">'
+			'<div class="card-div col-6">'
+			+ '<div class="card">'
 			+ '<div class="card-body">'
 			+ '<h5 class="card-title">' + value.Source + '</h5>'
 			+ '<h6 class="card-subtitle mb-2 text-muted">' +  new Date(value.publishedDate.seconds*1000) + '</h6>'
-			+ '<p class="card-text" id="news1">' + value.title + '</p>'
-			+ '<a href="'+value.link+'" target="_blank" id="views' + ID + '" class="card-link" >Open News</a>'
-			+ '<a href="#" onclick="event.preventDefault();" id="save' + ID + '" class="card-link">Save News</a>'
-			+ '<a href="#" onclick="event.preventDefault();" id="likes' + ID + '" class="card-link"><img src="/bootstrap-icons/hand-thumbs-up.svg" alt="" width="20" height="20" title="Like">' + value.likes + '</a>'
-			+ '<a href="#" onclick="event.preventDefault();" id="dislikes' + ID + '" class="card-link"><img src="/bootstrap-icons/hand-thumbs-down.svg" alt="" width="20" height="20" title="Dislike">' + value.dislikes + '</a>'
-			+ '<a href="#" onclick="event.preventDefault();" class="card-link"><img src="/bootstrap-icons/eye.svg" alt="" width="20" height="20" title="Views">' + value.views + '</a>'
+			+ '<p class="card-text">' + value.title + '</p>'
+			+ '<a href="'+value.link+'" target="_blank" id="views' + ID + '" class="card-link" >View News</a>'
+			+ '<a href="#" id="unsave' + ID + '"class="card-link">Unsave News</a>'
+			+ '<a href="#" id="likes' + ID + '" class="card-link"><img src="/bootstrap-icons/hand-thumbs-up.svg" alt="" width="20" height="20" title="Like">' + value.likes + '</a>'
+			+ '<a href="#" id="dislikes' + ID + '" class="card-link"><img src="/bootstrap-icons/hand-thumbs-down.svg" alt="" width="20" height="20" title="Dislike">' + value.dislikes + '</a>'
+			+ '<a href="#" class="card-link"><img src="/bootstrap-icons/eye.svg" alt="" width="20" height="20" title="Views">' + value.views + '</a>'
+			+ '</div>'
 			+ '</div>'
 			+ '</div>'
 		);
 		document.getElementById ("views" + ID).addEventListener ("click", function () {addView(ID)}, false);
-		document.getElementById ("save" + ID).addEventListener ("click", function () {saveArt(ID)}, false);
+		document.getElementById ("unsave" + ID).addEventListener ("click", function () {removeBook(ID)}, false);
 		document.getElementById ("likes" + ID).addEventListener ("click", function () {addLike(ID,value.likes)}, false);
 		document.getElementById ("dislikes" + ID).addEventListener ("click", function () {addDislike(ID,value.dislikes)}, false);
 	}
@@ -91,27 +111,27 @@ $(document).ready(async function () {
 		}
 	}
 	
+	function removeBook(article){
+	firebase.firestore()
+	.collection("users")
+	.doc(userID).update({
+	Bookmarks: firebase.firestore.FieldValue.arrayRemove(article)
+	});
+	}
+	
 	function addView(article){
 		firebase.firestore()
 		.collection("NewsArticleData")
 		.doc(article).update({
 		views: firebase.firestore.FieldValue.increment(1)
-		});
-		firebase.firestore()
-		.collection("users")
-		.doc(userID).update({
-		History: firebase.firestore.FieldValue.arrayUnion(article)
-		});
+	});
+	firebase.firestore()
+	.collection("users")
+	.doc(userID).update({
+	History: firebase.firestore.FieldValue.arrayUnion(article)
+	});
 	}
 	
-	function saveArt(article){
-		firebase.firestore()
-		.collection("users")
-		.doc(userID).update({
-		Bookmarks: firebase.firestore.FieldValue.arrayUnion(article)
-		});
-		console.log(article)
-	}
 	
 	function addLike(article, num){
 		firebase.firestore()
@@ -139,7 +159,7 @@ $(document).ready(async function () {
 		var scrollPosition = $(window).height() + $(window).scrollTop();
 		if ((scrollHeight - scrollPosition) / scrollHeight < 0.1) {
 			// when scroll to bottom of the page
-			postnews();
+			//postnews();
 		}
 	});
 

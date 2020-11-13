@@ -1,5 +1,22 @@
+var firebaseConfig = {
+  apiKey: "AIzaSyAQPAqzqDgY-ySsmEakXlyTo8BjbR7QKwM",
+  authDomain: "my-news-network-15401.firebaseapp.com",
+  databaseURL: "https://my-news-network-15401.firebaseio.com",
+  projectId: "my-news-network-15401",
+  storageBucket: "my-news-network-15401.appspot.com",
+  messagingSenderId: "100486016337",
+  appId: "1:100486016337:web:5a9a185b0a8797e1423770",
+  measurementId: "G-SS97Q9PSGK"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
 var db = firebase.firestore(); //for firestore
 // var storage = firebase.storage(); //for storage
+var userID;
+var emailAd;
+var userHis;
+var userBook;
 
 function handleSignIn() {
   if (firebase.auth().currentUser) { //if a user is currently logged in
@@ -91,7 +108,7 @@ function handleSignUp() {
       // alert("Your account has been created successfully with user email: " + email);
       // // window.open('index.html', '_self');
 
-      firebase.firestore().collection('users').doc(email).set(account).then(function () {
+      firebase.firestore().collection('users').doc(userUid).set(account).then(function () {
         alert("Document successfully written!  Your account has been created successfully with user email: " + email);
         window.open('index.html', '_self');
       }).catch(function () {
@@ -152,25 +169,35 @@ function sendPasswordReset() {
   // [END sendpasswordemail];
 }
 
-function updateProfile(e) {
-  e.preventDefault();
+function updateProfile() {
+  var user = firebase.auth().currentUser;
+  userID = user.uid;
   var newname = document.getElementById("updateNameField").value;
-  var newemail = document.getElementById("updateEmailField").value;
+  var bio = document.getElementById("updateBio").value;
+  alert(newname);
+  alert(bio);
+  alert(userID);
+  var docRef = db.collection("users").doc(userID);
 
-  console.log(newname);
-  console.log(newemail);
-
-  // db.collection("users").doc(email).update({
-  //   "name": newname,
-  //   "useremail": newemail
-  // }).then(function () {
-  //   console.log("Document successfully updated!");
-  // }).catch(function () {
-  //   alert("Document on write failed!");
-  // });
+  docRef.update({
+    "name": newname,
+    "userbio": bio
+  }).then(function () {
+    alert("Document successfully updated!");
+  }).catch(function (error) {
+    // The document probably doesn't exist.
+    alert("Error updating document: ", error);
+  });
 }
 
 function updatePassword() {
+  var user = firebase.auth().currentUser;
+  var newPassword = document.getElementById("newpassword").value;
+  user.updatePassword(newPassword).then(function () {
+    alert("Password succesfully updated!");
+  }).catch(function (error) {
+    alert("Unable to update password!");
+  });
 
 }
 
@@ -186,12 +213,36 @@ function initApp() {
     if (!user) {
       // User is signed out.
       firebase.auth().signOut();
-
+      console.log(window.location.pathname);
+      if (window.location.pathname != '/index.html' && window.location.pathname != '/signup.html'
+        && window.location.pathname != '/resetpwd.html') {
+        window.location = 'index.html';
+      }
     } else {
       // User is signed in.
-      var email = user.email;
-      var uid = user.uid;
-      // var displayName = firebase.firestore().collection('users').doc(email).get("name");
+      emailAd = user.email;
+      userID = user.uid;
+      console.log(userID);
+
+      var userData = firebase.firestore()
+        .collection("users").doc(user.uid).get().then(function (doc) {
+          if (doc.exists) {
+            userHis = doc.data().History;
+            userBook = doc.data().Bookmarks;
+            console.log(userHis);
+          } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+          }
+        }).catch(function (error) {
+          console.log("Error getting document:", error);
+        });
+
+      //var userHis = userData.History;
+
+      //console.log(window.location.href);
+      // var displayName = firebase.firestore().collection('users').doc(emailAd).get("name");
+      document.getElementById('userDropdown').textContent = emailAd;
 
       function renderProfile(doc) {
 
@@ -213,6 +264,14 @@ function initApp() {
         node.setAttribute("placeholder", doc.data().useremail);
         document.getElementById("profileFormDiv").appendChild(node);
 
+        //for disabled bio field dyanamically created
+        var node = document.createElement("INPUT");
+        node.setAttribute("type", "text");
+        node.setAttribute("data-id", doc.id);
+        node.setAttribute("disabled", "true");
+        node.setAttribute("class", "form-control")
+        node.setAttribute("placeholder", doc.data().userbio);
+        document.getElementById("profileFormDiv").appendChild(node);
 
         //FOR ACTUAL FORM INPUT
 
@@ -224,33 +283,17 @@ function initApp() {
         node.setAttribute("placeholder", "Enter name here");
         document.getElementById("profileFormDiv").appendChild(node);
 
-        var node = document.createElement("INPUT"); //insert new email
-        node.setAttribute("type", "email");
-        node.setAttribute("data-id", doc.id);
-        node.setAttribute("id", "updateEmailField");
-        node.setAttribute("class", "form-control")
-        node.setAttribute("placeholder", "Enter email here");
+        var node = document.createElement("INPUT"); //insert bio here
+        node.setAttribute("type", "text");
+        node.setAttribute("data-id", doc.id); //set data-id to user id
+        node.setAttribute("id", "updateBio");
+        node.setAttribute("class", "form-control mt-2") //set class
+        node.setAttribute("placeholder", "Enter profile bio here");
         document.getElementById("profileFormDiv").appendChild(node);
-
-        var node = document.createElement("INPUT"); //insert profile image
-        node.setAttribute("type", "file");
-        node.className = "upload";
-        document.getElementById("profileFormDiv").appendChild(node);
-
-
-        //for submit button dyanamically created
-        var node = document.createElement("BUTTON");
-        node.setAttribute("type", "submit");
-        node.setAttribute("class", "btn btn-primary");
-        node.setAttribute("onsubmit", "updateProfile()"); //attach onsubmit event on submit to update profile
-        node.innerHTML = "Submit";
-        document.getElementById("profileForm").appendChild(node);
-
-        document.getElementById('profileForm').addEventListener('submit', updateProfile());
 
       }
 
-      db.collection("users").where("useremail", "==", email)
+      db.collection("users").where("useremail", "==", emailAd)
         .get()
         .then(function (querySnapshot) {
           querySnapshot.forEach(function (doc) {

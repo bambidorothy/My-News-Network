@@ -34,7 +34,15 @@
     <!-- Scrolling JS -->
     <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
     <!-- JavaScript -->
+    <script src="checkLogin.js"></script>
+    <script>
+        var docRef = firebase.firestore()
+            .collection("NewsArticleData")
+            .orderBy("views", "desc");
+
+    </script>
     <script src="script.js"></script>
+
     <title>Home Page</title>
 </head>
 
@@ -48,7 +56,6 @@
             <div class="list-group list-group-flush">
                 <a href="home.html" class="list-group-item list-group-item-action bg-light">Top Stories</a>
                 <a href="your-news.html" class="list-group-item list-group-item-action bg-light">Your News</a>
-                <a href="subscribe.html" class="list-group-item list-group-item-action bg-light">Subscribe</a>
                 <a href="bookmarks.html" class="list-group-item list-group-item-action bg-light">Bookmarks</a>
                 <a href="local.html" class="list-group-item list-group-item-action bg-light">Local</a>
                 <a href="international.html" class="list-group-item list-group-item-action bg-light">International</a>
@@ -59,13 +66,12 @@
                         Categories
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="general.html">General</a>
                         <a class="dropdown-item" href="business.html">Business</a>
                         <a class="dropdown-item" href="entertainment.html">Entertainment</a>
-                        <a class="dropdown-item" href="health.html  ">Health</a>
+                        <a class="dropdown-item" href="politics.html  ">Politics</a>
                         <a class="dropdown-item" href="sports.html">Sports</a>
-                        <a class="dropdown-item" href="science.html">Science</a>
                         <a class="dropdown-item" href="technologies.html">Technologies</a>
-
                     </div>
                 </li>
 
@@ -95,9 +101,6 @@
                         id="menu-toggle">News</button>
                 </form>
 
-                &nbsp;&nbsp;&nbsp;&nbsp;
-
-
 
                 <div class="navbar-collapse" id="navbarSupportedContent">
                     <form class="form-inline float-sm-right my-2 my-lg-0">
@@ -111,7 +114,7 @@
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                 style="color:whitesmoke;">
                                 Me
@@ -163,7 +166,6 @@
             }
         }
         </script>-->
-    <script src="checkLogin.js"></script>
 </body>
 
 </html>

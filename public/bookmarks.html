@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Optional JavaScript -->
-    <script src="script.js"></script>
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -34,6 +34,9 @@
     <!-- Include FirebaseUI via CDN -->
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
     <title>Bookmark Articles</title>
+    <script src="bookmarkScript.js"></script>
+    <script src="checkLogin.js"></script>
+
 </head>
 
 <body>
@@ -46,7 +49,6 @@
             <div class="list-group list-group-flush">
                 <a href="home.html" class="list-group-item list-group-item-action bg-light">Top Stories</a>
                 <a href="your-news.html" class="list-group-item list-group-item-action bg-light">Your News</a>
-                <a href="subscribe.html" class="list-group-item list-group-item-action bg-light">Subscribe</a>
                 <a href="bookmarks.html" class="list-group-item list-group-item-action bg-light">Bookmarks</a>
                 <a href="local.html" class="list-group-item list-group-item-action bg-light">Local</a>
                 <a href="international.html" class="list-group-item list-group-item-action bg-light">International</a>
@@ -93,8 +95,6 @@
                         id="menu-toggle">News</button>
                 </form>
 
-                &nbsp;&nbsp;&nbsp;&nbsp;
-
 
 
                 <div class="navbar-collapse" id="navbarSupportedContent">
@@ -109,7 +109,7 @@
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                 style="color:whitesmoke;">
                                 Me
@@ -125,75 +125,8 @@
             </nav>
 
             <div class="container-fluid">
-                <div class="row">
-                    <div class="card-div col-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Saved News Title</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                <p class="card-text">Some quick example text to build on the Saved News Title and make
-                                    up
-                                    the
-                                    bulk of
-                                    the card's
-                                    content.</p>
-                                <a href="#" class="card-link">View News</a>
-                                <a href="#" class="card-link">Unsave News</a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row" id="timeline">
 
-                    <div class="card-div col-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Saved News Title</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                <p class="card-text">Some quick example text to build on the Saved News Title and make
-                                    up
-                                    the
-                                    bulk of
-                                    the card's
-                                    content.</p>
-                                <a href="#" class="card-link">View News</a>
-                                <a href="#" class="card-link">Unsave News</a>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-div col-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Saved News Title</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                <p class="card-text">Some quick example text to build on the Saved News Title and make
-                                    up
-                                    the
-                                    bulk of
-                                    the card's
-                                    content.</p>
-                                <a href="#" class="card-link">View News</a>
-                                <a href="#" class="card-link">Unsave News</a>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-div col-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Saved News Title</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                                <p class="card-text">Some quick example text to build on the Saved News Title and make
-                                    up
-                                    the
-                                    bulk of
-                                    the card's
-                                    content.</p>
-                                <a href="#" class="card-link">View News</a>
-                                <a href="#" class="card-link">Unsave News</a>
-
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

@@ -34,6 +34,8 @@
     <!-- Scrolling JS -->
     <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
     <!-- JavaScript -->
+    <script src="bookmarkScript.js"></script>
+    <script src="checkLogin.js"></script>
     <script src="script.js"></script>
     <title>Profile Page</title>
 </head>
@@ -110,7 +112,7 @@
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                 style="color:whitesmoke;">
                                 Me
@@ -130,12 +132,13 @@
                     <legend>Current User Details</legend>
                     <div class="form group" id="profileFormDiv">
                     </div>
+                    <button type="submit" class="btn btn-danger" onclick="updateProfile()">Submit</button>
                 </form>
 
                 <form id="profileForm" class="form pt-5">
                     <legend>Update Account Password</legend>
                     <div class="form group" id="pwdFormDiv">
-                        <input class="form-control" type="password">
+                        <input class="form-control" type="password" id="newpassword">
                     </div>
                     <button type="submit" class="btn btn-danger" onclick="updatePassword()">Update Password</button>
                 </form>

@@ -38,11 +38,10 @@
     <script>
 	var docRef = firebase.firestore()
 		.collection("NewsArticleData")
-		.where("Category", "==", "business")
 		.orderBy("publishedDate", "desc");
 	
 	</script>
-	<script src="script.js"></script>
+	<script src="historyScript.js"></script>
 	
     <title>Home Page</title>
 </head>

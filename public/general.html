@@ -38,7 +38,7 @@
     <script>
 	var docRef = firebase.firestore()
 		.collection("NewsArticleData")
-		.where("Category", "==", "business")
+		.where("Category", "==", "other")
 		.orderBy("publishedDate", "desc");
 	
 	</script>

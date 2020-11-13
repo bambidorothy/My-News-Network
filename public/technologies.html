@@ -34,8 +34,17 @@
     <!-- Scrolling JS -->
     <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
     <!-- JavaScript -->
-    <script src="script.js"></script>
-    <title>Technology News</title>
+	<script src="checkLogin.js"></script>
+    <script>
+	var docRef = firebase.firestore()
+		.collection("NewsArticleData")
+		.where("Category", "==", "tech")
+		.orderBy("publishedDate", "desc");
+	
+	</script>
+	<script src="script.js"></script>
+	
+    <title>Home Page</title>
 </head>
 
 <body>
@@ -48,7 +57,6 @@
             <div class="list-group list-group-flush">
                 <a href="home.html" class="list-group-item list-group-item-action bg-light">Top Stories</a>
                 <a href="your-news.html" class="list-group-item list-group-item-action bg-light">Your News</a>
-                <a href="subscribe.html" class="list-group-item list-group-item-action bg-light">Subscribe</a>
                 <a href="bookmarks.html" class="list-group-item list-group-item-action bg-light">Bookmarks</a>
                 <a href="local.html" class="list-group-item list-group-item-action bg-light">Local</a>
                 <a href="international.html" class="list-group-item list-group-item-action bg-light">International</a>
@@ -59,13 +67,12 @@
                         Categories
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="general.html">General</a>
                         <a class="dropdown-item" href="business.html">Business</a>
                         <a class="dropdown-item" href="entertainment.html">Entertainment</a>
-                        <a class="dropdown-item" href="health.html  ">Health</a>
+                        <a class="dropdown-item" href="politics.html  ">Politics</a>
                         <a class="dropdown-item" href="sports.html">Sports</a>
-                        <a class="dropdown-item" href="science.html">Science</a>
-                        <a class="dropdown-item" href="technologies.html">Technologies</a>
-
+						<a class="dropdown-item" href="technologies.html">Technologies</a>
                     </div>
                 </li>
 
@@ -76,17 +83,17 @@
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <!-- <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-                    <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <form class="form-inline my-2 my-lg-0">
-                            <input class="form-control mr-sm-2 my-sm-0" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
-                        </form>
-                        <button class="btn btn-danger my-2 my-sm-0 ml-auto" type="submit">SignOut</button>
-                    </div>
-                </nav> -->
+                <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <form class="form-inline my-2 my-lg-0">
+                        <input class="form-control mr-sm-2 my-sm-0" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                    <button class="btn btn-danger my-2 my-sm-0 ml-auto" type="submit">SignOut</button>
+                </div>
+            </nav> -->
 
 
             <nav class="navbar navbar-expand-lg navbar-light" style="background-color:rgb(52, 73, 165);">
@@ -94,8 +101,6 @@
                     <button class="btn btn-primary form-control my-2 my-sm-0" type="button"
                         id="menu-toggle">News</button>
                 </form>
-
-                &nbsp;&nbsp;&nbsp;&nbsp;
 
 
 
@@ -111,7 +116,7 @@
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                 style="color:whitesmoke;">
                                 Me
@@ -127,7 +132,7 @@
             </nav>
 
             <div class="container-fluid" id="timeline">
-                <!--  -->
+
             </div>
         </div>
         <!-- /#page-content-wrapper -->
@@ -146,7 +151,23 @@
             $("#wrapper").toggleClass("toggled");
         });
     </script>
-
+    <!-- <script>
+        function BtnSearch() {
+            var input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById("Search");
+            filter = input.value.toUpperCase();
+         
+            for (i = 0; i < li.length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                txtValue = a.textContent || a.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+        </script>-->
 </body>
 
 </html>
